@@ -1,0 +1,12 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Lib\\": "lib"
+        }
+    },
+    "require": {
+        "bcosca/fatfree": "^3.6",
+        "cboden/ratchet": "^0.4",
+        "ratchet/pawl": "^0.3.4"
+    }
+}

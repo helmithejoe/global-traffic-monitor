@@ -1,0 +1,6 @@
+[globals]
+db_str=mysql:host=localhost;port=3306;dbname=traffic
+db_username=root
+db_password=
+
+online_interval=5
