@@ -52,6 +52,10 @@ websocket_host=localhost
 websocket_public_host=10.10.10.10
 websocket_port=8080
 ```
+You can also configure how long location markers will appear. Real-time traffic will need to appear at some time to become visible. This value is in milliseconds:
+```
+traffic_marker_timeout=30000
+```
 Run composer install:
 ```
 composer install
