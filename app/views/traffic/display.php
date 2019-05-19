@@ -63,7 +63,8 @@
                         var datetime = timestampToDatetime(parseInt(this.request_time));
                         var info = this.ip + ' - ' + this.request_method + ' ' + this.request_uri + 
                             ' [' + datetime + ']';
-                        data.addRows([[parseFloat(this.latitude), parseFloat(this.longitude), 0, info]]);
+                        if(this.latitude && this.longitude)
+                            data.addRows([[parseFloat(this.latitude), parseFloat(this.longitude), 0, info]]);
                     });
                     chart.draw(data, options);
                 });
@@ -108,7 +109,8 @@
                     var datetime = timestampToDatetime(parseInt(response.request_time));
                     var info = response.ip + ' - ' + response.request_method + ' ' + response.request_uri + 
                         ' [' + datetime + ']';
-                    data.addRows([[parseFloat(response.latitude), parseFloat(response.longitude), 0, info]]);
+                    if(response.latitude && response.longitude)
+                        data.addRows([[parseFloat(response.latitude), parseFloat(response.longitude), 0, info]]);
                     chart.draw(data, options);
                     
                     //refresh timeout so that timeout of all data will always be consistent 
