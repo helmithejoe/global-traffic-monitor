@@ -7,7 +7,7 @@ $classLoader = new SplClassLoader('WebSocket', __DIR__ . '/lib');
 $classLoader->register();
 
 //configure server parameters
-$server = new WebSocket\Server('127.0.0.1', 8000, false);
+$server = new WebSocket\Server('0.0.0.0', 8000, false);
 
 //server's ability to capture traffic from everywhere
 $server->setCheckOrigin(false);
