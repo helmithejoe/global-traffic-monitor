@@ -109,7 +109,7 @@
                 socket.onmessage = function(msg) {
                     var response;
                     response = JSON.parse(msg.data);
-                    
+                    console.log(response);
                     var datetime = timestampToDatetime(parseInt(response.request_time));
                     var info = response.ip + ' - ' + response.request_method + ' ' + response.request_uri + 
                         ' [' + datetime + ']';
@@ -122,32 +122,37 @@
                 };
                 socket.onclose = function() {
                     console.log('closed');
-                    wsInit();
-                    wsLoad();
+                    if(isRealTime) {
+                        wsInit();
+                        wsLoad();
+                    }
                 };
                 
+                //implement interval for disappearing markers only for realtime mode
                 if(isRealTime) {
-                    //implement interval for disappearing markers only for realtime mode
                     interval = setInterval(function(){
                         clearChartData();
                     }, timeout);
                 }
+                
             }
             
-            //init websocket once
-            wsInit();
-            
-            //choosing between realtiime or x hour
+            //choosing between realtime or x hour
             $('input[name=method]').click(function() {
                 if($(this).val() == 'realtime') {
                     isRealTime = true;
                     //prevent double connection
-                    if(socket.readyState !== socket.OPEN){
-                        wsInit();
-                    }
+                    //if(socket.readyState !== socket.OPEN){
+                        //wsInit();
+                    //}
+                    wsInit();
                     wsLoad();
                 } else {
                     isRealTime = false;
+                    //close the websocket connection, if open.
+                    if(socket.readyState === WebSocket.OPEN) {
+                        socket.close();
+                    }
                     var lasthour = $('#hour').val();
                     ajaxLoad(lasthour);
                 }
