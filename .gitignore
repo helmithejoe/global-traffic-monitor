@@ -1,2 +1,4 @@
-/app/config/config.ini
-/vendor
+app/config/config.ini
+vendor
+tmp/*
+!tmp/.gitkeep

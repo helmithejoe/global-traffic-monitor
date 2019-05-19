@@ -1,5 +1,8 @@
 <?php
 
+/*
+* a base model to inherit common functionality among other models
+*/
 class BaseModel {
     public $db;
 	protected $f3;

@@ -3,6 +3,9 @@ create table traffic(
     ip varchar(20),
     longitude varchar(100),
     latitude varchar(100),
-    timestamp_created int unsigned,
-    timestamp_online_limit int unsigned
+    user_agent varchar(255),
+    request_uri varchar(255),
+    request_method varchar(255),
+    request_time int unsigned,
+    timestamp_created int unsigned
 )engine=MyISAM;
