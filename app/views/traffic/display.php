@@ -118,6 +118,8 @@
                 };
                 socket.onclose = function() {
                     console.log('closed');
+                    wsInit();
+                    wsLoad();
                 };
                 
                 //implement interval for disappearing markers

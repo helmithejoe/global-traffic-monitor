@@ -26,9 +26,9 @@ class TrafficModel extends BaseModel {
     }
     
     /*
-    * send log to websocket
+    * connect to websocket
     */
-    private function _sendLog($data) {
+    private function _connect() {
         $client = new WebsocketClient;
         $client->connect(
             $this->f3->get('websocket_host'),
@@ -36,11 +36,22 @@ class TrafficModel extends BaseModel {
             $this->f3->get('websocket_application')
         );
         
+        while($client->checkConnection() === false) {
+            $this->_connect();
+        }
+        
+        return $client;
+    }
+    
+    /*
+    * send log to websocket
+    */
+    private function _sendLog($data) {
+        $client = $this->_connect();
         $payload = json_encode(array(
             'action' => $this->f3->get('websocket_action'),
             'data' => $data
         ));
-        
         $client->sendData($payload);
         $client->disconnect();
     }
