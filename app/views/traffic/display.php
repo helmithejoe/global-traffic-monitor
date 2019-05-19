@@ -126,10 +126,12 @@
                     wsLoad();
                 };
                 
-                //implement interval for disappearing markers
-                interval = setInterval(function(){
-                    clearChartData();
-                }, timeout);
+                if(isRealTime) {
+                    //implement interval for disappearing markers only for realtime mode
+                    interval = setInterval(function(){
+                        clearChartData();
+                    }, timeout);
+                }
             }
             
             //init websocket once
@@ -138,12 +140,14 @@
             //choosing between realtiime or x hour
             $('input[name=method]').click(function() {
                 if($(this).val() == 'realtime') {
+                    isRealTime = true;
                     //prevent double connection
                     if(socket.readyState !== socket.OPEN){
                         wsInit();
                     }
                     wsLoad();
                 } else {
+                    isRealTime = false;
                     var lasthour = $('#hour').val();
                     ajaxLoad(lasthour);
                 }
