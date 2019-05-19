@@ -73,7 +73,7 @@
             * websocket init
             */
             function wsInit() {
-                serverUrl = 'ws://{{ @websocket_host }}:{{ @websocket_port }}{{ @websocket_application }}';
+                serverUrl = 'ws://{{ @websocket_public_host }}:{{ @websocket_port }}{{ @websocket_application }}';
                 if(window.MozWebSocket) {
                     socket = new MozWebSocket(serverUrl);
                 } else if(window.WebSocket) {
