@@ -59,8 +59,8 @@ class TrafficModel extends BaseModel {
         $geo = \Web\Geo::instance();
         $loc = $geo->location($ip);
         
-        $data['latitude'] = $loc['latitude'];
-        $data['longitude'] = $loc['longitude'];
+        $data['latitude'] = !empty($loc['latitude'])?$loc['latitude']:'';
+        $data['longitude'] = !empty($loc['longitude'])?$loc['longitude']:'';
         $data['ip'] = $ip;
         $data['user_agent'] = $user_agent;
         $data['request_uri'] = $uri;
