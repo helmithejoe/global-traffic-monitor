@@ -115,8 +115,9 @@
                 };
                 socket.onclose = function() {
                     console.log('closed');
-                    if(isRealTime) {
-                        wsInit();
+                    wsInit();
+                    //prevent double connection
+                    if(socket.readyState !== socket.OPEN){
                         wsLoad();
                     }
                 };
@@ -126,8 +127,6 @@
             //choosing between realtime or x hour
             $('input[name=method]').click(function() {
                 if($(this).val() == 'realtime') {
-                    isRealTime = true;
-                    
                     //re-init chart
                     clearChartData();
                     
@@ -136,13 +135,12 @@
                     if(socket.readyState !== socket.OPEN){
                         wsLoad();
                     }
+                    
                     //implement interval for disappearing markers only for realtime mode
                     interval = setInterval(function(){
                         clearChartData();
                     }, timeout);
                 } else {
-                    isRealTime = false;
-                    
                     //disable disappearing location marker
                     //because historical data must always appear
                     clearInterval(interval);
