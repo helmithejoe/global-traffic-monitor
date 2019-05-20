@@ -121,13 +121,6 @@
                     }
                 };
                 
-                //implement interval for disappearing markers only for realtime mode
-                if(isRealTime) {
-                    interval = setInterval(function(){
-                        clearChartData();
-                    }, timeout);
-                }
-                
             }
             
             //choosing between realtime or x hour
@@ -143,6 +136,10 @@
                     if(socket.readyState !== socket.OPEN){
                         wsLoad();
                     }
+                    //implement interval for disappearing markers only for realtime mode
+                    interval = setInterval(function(){
+                        clearChartData();
+                    }, timeout);
                 } else {
                     isRealTime = false;
                     
