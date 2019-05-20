@@ -54,11 +54,6 @@
             * ajax function to load historical traffic
             */
             function ajaxLoad(lasthour) {
-                //disable disappearing location marker
-                //because historical data must always appear
-                clearInterval(interval);
-                //re-init chart
-                clearChartData();
                 $.ajax({
                     url: "{{ @base_url }}{{ @xhour_action_url }}?lasthour=" + lasthour,
                     dataType: "json"
@@ -90,8 +85,6 @@
             * websocket function to load real-time traffic
             */
             function wsLoad() {
-                //re-init chart
-                clearChartData();
                 //real-time data must disappear as soon as the request ends
                 //however we still need sometime for our eyes to see
                 //so we setup duration of time when location markers will disappear (milliseconds)
@@ -124,7 +117,10 @@
                     console.log('closed');
                     if(isRealTime) {
                         wsInit();
-                        wsLoad();
+                        //prevent double connection
+                        if(socket.readyState !== socket.OPEN){
+                            wsLoad();
+                        }
                     }
                 };
                 
@@ -142,14 +138,23 @@
                 if($(this).val() == 'realtime') {
                     isRealTime = true;
                     
-                    wsInit();
+                    //re-init chart
+                    clearChartData();
                     
+                    wsInit();
                     //prevent double connection
                     if(socket.readyState !== socket.OPEN){
                         wsLoad();
                     }
                 } else {
                     isRealTime = false;
+                    
+                    //disable disappearing location marker
+                    //because historical data must always appear
+                    clearInterval(interval);
+                    //re-init chart
+                    clearChartData();
+                    
                     //close the websocket connection, if open.
                     if(socket.readyState === WebSocket.OPEN) {
                         socket.close();
