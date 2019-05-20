@@ -141,12 +141,13 @@
             $('input[name=method]').click(function() {
                 if($(this).val() == 'realtime') {
                     isRealTime = true;
-                    //prevent double connection
-                    //if(socket.readyState !== socket.OPEN){
-                        //wsInit();
-                    //}
+                    
                     wsInit();
-                    wsLoad();
+                    
+                    //prevent double connection
+                    if(socket.readyState !== socket.OPEN){
+                        wsLoad();
+                    }
                 } else {
                     isRealTime = false;
                     //close the websocket connection, if open.
