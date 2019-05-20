@@ -117,10 +117,7 @@
                     console.log('closed');
                     if(isRealTime) {
                         wsInit();
-                        //prevent double connection
-                        if(socket.readyState !== socket.OPEN){
-                            wsLoad();
-                        }
+                        wsLoad();
                     }
                 };
                 
